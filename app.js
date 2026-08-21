@@ -506,7 +506,7 @@ function carCardHTML(car) {
           <span class="text-xl font-extrabold">${car.price}</span>
           <span class="text-xs text-[#8a7f6a]"> ${t("per_day")}</span>
         </div>
-        <a href="${rootPath()}reservation/reservation.html?car=${car.id}"
+        <a href="reservation.html?car=${car.id}"
           class="text-sm font-semibold bg-[#141414] text-white px-4 py-2 rounded-full hover:bg-[#b8935a] transition-colors">
           ${t("book_now")}
         </a>
