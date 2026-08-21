@@ -76,53 +76,134 @@
 </section>
 
 <section class="py-16 lg:py-24">
-  <div class="max-w-2xl mx-auto px-5 lg:px-8">
-    <form id="bookingForm" class="reveal bg-white rounded-2xl border border-[#e9e0d0] shadow-sm p-6 lg:p-10 space-y-5">
+  <div class="max-w-6xl mx-auto px-5 lg:px-8 grid lg:grid-cols-[1fr_360px] gap-8 items-start">
+
+    <form id="bookingForm" novalidate class="reveal bg-white rounded-2xl border border-[#e9e0d0] shadow-sm p-6 lg:p-10 space-y-8">
+
+      <!-- Step 1: car + dates -->
       <div>
-        <label class="block text-sm font-semibold text-[#141414] mb-1.5" data-i18n="form_name">الاسم الكامل</label>
-        <input type="text" name="name" required
-          class="w-full rounded-xl border border-[#e3d9c2] bg-[#f6f2e8] px-4 py-3 text-sm focus:outline-none focus:border-[#b8935a]" />
-      </div>
-      <div>
-        <label class="block text-sm font-semibold text-[#141414] mb-1.5" data-i18n="form_phone">رقم الهاتف</label>
-        <input type="tel" name="phone" required
-          class="w-full rounded-xl border border-[#e3d9c2] bg-[#f6f2e8] px-4 py-3 text-sm focus:outline-none focus:border-[#b8935a]" />
-      </div>
-      <div>
-        <label class="block text-sm font-semibold text-[#141414] mb-1.5" data-i18n="form_car">السيارة</label>
-        <select name="car" id="carSelect" required
-          class="w-full rounded-xl border border-[#e3d9c2] bg-[#f6f2e8] px-4 py-3 text-sm focus:outline-none focus:border-[#b8935a]">
-          <option value="" data-i18n="form_car_choose">اختر سيارة</option>
-        </select>
-      </div>
-      <div class="grid sm:grid-cols-2 gap-5">
-        <div>
-          <label class="block text-sm font-semibold text-[#141414] mb-1.5" data-i18n="form_start">تاريخ الاستلام</label>
-          <input type="date" name="start" required
-            class="w-full rounded-xl border border-[#e3d9c2] bg-[#f6f2e8] px-4 py-3 text-sm focus:outline-none focus:border-[#b8935a]" />
+        <div class="flex items-center gap-3 mb-5">
+          <span class="form-step-badge">1</span>
+          <h2 class="font-display font-bold text-[#141414] text-lg" data-i18n="res_step1_t">اختر سيارتك وتواريخك</h2>
         </div>
-        <div>
-          <label class="block text-sm font-semibold text-[#141414] mb-1.5" data-i18n="form_end">تاريخ التسليم</label>
-          <input type="date" name="end" required
-            class="w-full rounded-xl border border-[#e3d9c2] bg-[#f6f2e8] px-4 py-3 text-sm focus:outline-none focus:border-[#b8935a]" />
+        <div class="space-y-5">
+          <div>
+            <label class="block text-sm font-semibold text-[#141414] mb-1.5" data-i18n="form_car">السيارة</label>
+            <select name="car" id="carSelect" required
+              class="form-input w-full rounded-xl border border-[#e3d9c2] bg-[#f6f2e8] px-4 py-3 text-sm focus:outline-none">
+              <option value="" data-i18n="form_car_choose">اختر سيارة</option>
+            </select>
+            <p class="field-error-msg" data-field="car" data-i18n="err_car">الرجاء اختيار سيارة</p>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-sm font-semibold text-[#141414] mb-1.5" data-i18n="form_start">تاريخ الاستلام</label>
+              <input type="date" name="start" id="startDate" required
+                class="form-input w-full rounded-xl border border-[#e3d9c2] bg-[#f6f2e8] px-4 py-3 text-sm focus:outline-none" />
+              <p class="field-error-msg" data-field="start" data-i18n="err_required">هاد الحقل مطلوب</p>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-[#141414] mb-1.5" data-i18n="form_end">تاريخ التسليم</label>
+              <input type="date" name="end" id="endDate" required
+                class="form-input w-full rounded-xl border border-[#e3d9c2] bg-[#f6f2e8] px-4 py-3 text-sm focus:outline-none" />
+              <p class="field-error-msg" data-field="end" data-i18n="err_required">هاد الحقل مطلوب</p>
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-[#141414] mb-1.5" data-i18n="form_location">مكان الاستلام</label>
+            <input type="text" name="location" required
+              class="form-input w-full rounded-xl border border-[#e3d9c2] bg-[#f6f2e8] px-4 py-3 text-sm focus:outline-none" />
+            <p class="field-error-msg" data-field="location" data-i18n="err_required">هاد الحقل مطلوب</p>
+          </div>
         </div>
       </div>
+
+      <!-- Step 2: personal info -->
       <div>
-        <label class="block text-sm font-semibold text-[#141414] mb-1.5" data-i18n="form_location">مكان الاستلام</label>
-        <input type="text" name="location" required
-          class="w-full rounded-xl border border-[#e3d9c2] bg-[#f6f2e8] px-4 py-3 text-sm focus:outline-none focus:border-[#b8935a]" />
+        <div class="flex items-center gap-3 mb-5">
+          <span class="form-step-badge">2</span>
+          <h2 class="font-display font-bold text-[#141414] text-lg" data-i18n="res_step2_t">معلوماتك الشخصية</h2>
+        </div>
+        <div class="space-y-5">
+          <div>
+            <label class="block text-sm font-semibold text-[#141414] mb-1.5" data-i18n="form_name">الاسم الكامل</label>
+            <input type="text" name="name" required
+              class="form-input w-full rounded-xl border border-[#e3d9c2] bg-[#f6f2e8] px-4 py-3 text-sm focus:outline-none" />
+            <p class="field-error-msg" data-field="name" data-i18n="err_required">هاد الحقل مطلوب</p>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-[#141414] mb-1.5" data-i18n="form_phone">رقم الهاتف</label>
+            <input type="tel" name="phone" required
+              class="form-input w-full rounded-xl border border-[#e3d9c2] bg-[#f6f2e8] px-4 py-3 text-sm focus:outline-none" />
+            <p class="field-error-msg" data-field="phone" data-i18n="err_required">هاد الحقل مطلوب</p>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-[#141414] mb-1.5" data-i18n="form_message">رسالة إضافية (اختياري)</label>
+            <textarea name="message" rows="3" data-i18n-placeholder="form_message_ph"
+              class="form-input w-full rounded-xl border border-[#e3d9c2] bg-[#f6f2e8] px-4 py-3 text-sm focus:outline-none"></textarea>
+          </div>
+        </div>
       </div>
-      <div>
-        <label class="block text-sm font-semibold text-[#141414] mb-1.5" data-i18n="form_message">رسالة إضافية (اختياري)</label>
-        <textarea name="message" rows="3" data-i18n-placeholder="form_message_ph"
-          class="w-full rounded-xl border border-[#e3d9c2] bg-[#f6f2e8] px-4 py-3 text-sm focus:outline-none focus:border-[#b8935a]"></textarea>
-      </div>
-      <p id="formError" class="hidden text-sm text-red-600" data-i18n="form_required">الرجاء تعبئة جميع الحقول المطلوبة</p>
-      <button type="submit" class="btn-gold w-full flex items-center justify-center gap-2 font-semibold px-6 py-3.5 rounded-full">
+
+      <button type="submit" class="btn-gold w-full flex items-center justify-center gap-2 font-semibold px-6 py-3.5 rounded-full lg:hidden">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2Z"/></svg>
         <span data-i18n="form_submit">تأكيد الحجز عبر واتساب</span>
       </button>
     </form>
+
+    <!-- Live booking summary (desktop sticky sidebar) -->
+    <aside class="reveal summary-card bg-[#141414] rounded-2xl p-6 hero-pattern">
+      <h3 class="font-display font-bold text-white text-base mb-4" data-i18n="summary_title">ملخص الحجز</h3>
+
+      <div id="summaryEmpty" class="text-sm text-[#8a8478] py-6 text-center" data-i18n="summary_placeholder">
+        اختر سيارة لعرض تفاصيل الحجز
+      </div>
+
+      <div id="summaryFilled" class="hidden space-y-4">
+        <div class="flex items-center gap-3">
+          <img id="summaryCarImg" src="" alt="" class="w-16 h-16 rounded-xl object-cover border border-white/10" />
+          <div>
+            <p id="summaryCarName" class="text-white font-semibold text-sm"></p>
+            <p id="summaryCarSpecs" class="text-[#8a8478] text-xs"></p>
+          </div>
+        </div>
+        <div class="border-t border-white/10 pt-4 space-y-2 text-sm">
+          <div class="flex justify-between text-[#cfc6b0]">
+            <span data-i18n="summary_duration">مدة الكراء</span>
+            <span id="summaryDuration">—</span>
+          </div>
+          <div class="flex justify-between text-[#cfc6b0]">
+            <span data-i18n="per_day">الدرهم / اليوم</span>
+            <span id="summaryPerDay">—</span>
+          </div>
+        </div>
+        <div class="border-t border-white/10 pt-4 flex justify-between items-center">
+          <span class="text-white text-sm font-semibold" data-i18n="summary_total">الثمن الإجمالي</span>
+          <span id="summaryTotal" class="summary-total text-2xl font-extrabold">—</span>
+        </div>
+      </div>
+
+      <button type="submit" form="bookingForm" class="btn-gold hidden lg:flex w-full items-center justify-center gap-2 font-semibold px-6 py-3.5 rounded-full mt-6">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2Z"/></svg>
+        <span data-i18n="form_submit">تأكيد الحجز عبر واتساب</span>
+      </button>
+
+      <div class="mt-6 pt-5 border-t border-white/10 space-y-2.5">
+        <div class="trust-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          <span data-i18n="trust_no_prepay">بلا دفع مسبق</span>
+        </div>
+        <div class="trust-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          <span data-i18n="trust_fast_reply">رد خلال دقائق</span>
+        </div>
+        <div class="trust-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6l8-4Z"/></svg>
+          <span data-i18n="trust_secure">حجز مباشر وآمن</span>
+        </div>
+      </div>
+    </aside>
+
   </div>
 </section>
 
@@ -156,15 +237,87 @@
     if (preselect) select.value = preselect;
   }
 
+  function daysBetween(startStr, endStr) {
+    if (!startStr || !endStr) return 0;
+    const start = new Date(startStr);
+    const end = new Date(endStr);
+    const diff = Math.round((end - start) / 86400000);
+    return diff > 0 ? diff : 0;
+  }
+
+  function updateSummary() {
+    const lang = document.documentElement.getAttribute("data-lang") || "ar";
+    const carId = document.getElementById("carSelect").value;
+    const start = document.getElementById("startDate").value;
+    const end = document.getElementById("endDate").value;
+    const empty = document.getElementById("summaryEmpty");
+    const filled = document.getElementById("summaryFilled");
+    const car = CARS.find((c) => c.id === carId);
+
+    if (!car) {
+      empty.classList.remove("hidden");
+      filled.classList.add("hidden");
+      return;
+    }
+    empty.classList.add("hidden");
+    filled.classList.remove("hidden");
+
+    document.getElementById("summaryCarImg").src = car.image;
+    document.getElementById("summaryCarImg").alt = car.name;
+    document.getElementById("summaryCarName").textContent = `${car.name} (${car.year})`;
+    document.getElementById("summaryCarSpecs").textContent =
+      `${car.transmission[lang]} · ${car.seats} ${I18N[lang].seats} · ${car.fuel[lang]}`;
+    document.getElementById("summaryPerDay").textContent = `${car.price} ${I18N[lang].per_day}`;
+
+    const days = daysBetween(start, end);
+    if (days > 0) {
+      document.getElementById("summaryDuration").textContent = `${days} ${I18N[lang].summary_day_unit}`;
+      document.getElementById("summaryTotal").textContent = `${days * car.price} DH`;
+    } else {
+      document.getElementById("summaryDuration").textContent = "—";
+      document.getElementById("summaryTotal").textContent = "—";
+    }
+  }
+
+  function setFieldError(name, show) {
+    const input = document.querySelector(`[name="${name}"], #${name}Select, #${name}Date`);
+    const msg = document.querySelector(`.field-error-msg[data-field="${name}"]`);
+    if (input) input.classList.toggle("field-error", show);
+    if (msg) msg.classList.toggle("show", show);
+  }
+
   function onLanguageApplied() {
     populateCarSelect();
+    updateSummary();
   }
 
   document.addEventListener("DOMContentLoaded", () => {
     populateCarSelect();
 
+    // Prevent picking a pickup date in the past
+    const todayStr = new Date().toISOString().split("T")[0];
+    document.getElementById("startDate").setAttribute("min", todayStr);
+    document.getElementById("endDate").setAttribute("min", todayStr);
+
+    ["carSelect", "startDate", "endDate"].forEach((id) => {
+      document.getElementById(id).addEventListener("change", () => {
+        // keep end date's min in sync with the chosen start date
+        if (id === "startDate") {
+          const start = document.getElementById("startDate").value;
+          if (start) document.getElementById("endDate").setAttribute("min", start);
+        }
+        updateSummary();
+      });
+    });
+    updateSummary();
+
+    // Clear an error as soon as the field becomes valid again
+    ["name", "phone", "location"].forEach((name) => {
+      const input = document.querySelector(`[name="${name}"]`);
+      if (input) input.addEventListener("input", () => setFieldError(name, !input.value.trim()));
+    });
+
     const form = document.getElementById("bookingForm");
-    const errorEl = document.getElementById("formError");
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const data = new FormData(form);
@@ -176,16 +329,30 @@
       const location = data.get("location")?.trim();
       const message = data.get("message")?.trim();
 
-      if (!name || !phone || !carId || !start || !end || !location) {
-        errorEl.classList.remove("hidden");
+      let firstInvalid = null;
+      const fields = { car: carId, start, end, location, name, phone };
+      Object.entries(fields).forEach(([key, val]) => {
+        const invalid = !val;
+        setFieldError(key, invalid);
+        if (invalid && !firstInvalid) firstInvalid = key;
+      });
+
+      const badDateOrder = start && end && daysBetween(start, end) <= 0;
+      setFieldError("end", badDateOrder || !end);
+      if (badDateOrder && !firstInvalid) firstInvalid = "end";
+
+      if (firstInvalid) {
+        const el = document.querySelector(`[name="${firstInvalid}"], #${firstInvalid}Select, #${firstInvalid}Date`);
+        if (el) { el.scrollIntoView({ behavior: "smooth", block: "center" }); el.focus(); }
         return;
       }
-      errorEl.classList.add("hidden");
 
       const car = CARS.find((c) => c.id === carId);
+      const days = daysBetween(start, end);
       const url = buildWhatsAppLink({
         carName: car ? `${car.name} (${car.year})` : carId,
-        start, end, location, name, phone, message,
+        start, end, location, name, phone,
+        message: message ? `${message} — ${days} ${I18N[document.documentElement.getAttribute("data-lang") || "ar"].summary_day_unit} · ${days * (car ? car.price : 0)} DH` : `${days} ${I18N[document.documentElement.getAttribute("data-lang") || "ar"].summary_day_unit} · ${days * (car ? car.price : 0)} DH`,
       });
       window.open(url, "_blank");
     });

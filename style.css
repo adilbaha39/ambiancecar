@@ -215,3 +215,57 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   margin-inline: 10px;
   vertical-align: middle;
 }
+
+/* ---------------- Reservation form UX ---------------- */
+.form-input {
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+.form-input:focus {
+  border-color: var(--ac-gold) !important;
+  box-shadow: 0 0 0 4px rgba(184, 147, 90, 0.15);
+  background-color: #ffffff !important;
+}
+.form-input.field-error {
+  border-color: #d64545 !important;
+}
+.field-error-msg {
+  display: none;
+  color: #c0392b;
+  font-size: 0.78rem;
+  margin-top: 6px;
+}
+.field-error-msg.show { display: block; }
+
+.form-step-badge {
+  width: 28px; height: 28px;
+  border-radius: 999px;
+  background: var(--ac-black);
+  color: var(--ac-gold-2);
+  font-weight: 700;
+  font-size: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Sticky booking summary card */
+.summary-card {
+  position: sticky;
+  top: 100px;
+}
+.summary-total {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, var(--ac-gold-2), var(--ac-gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--ac-muted);
+}
+.trust-badge svg { flex-shrink: 0; color: var(--ac-gold-2); }
