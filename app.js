@@ -172,6 +172,18 @@ const I18N = {
     wa_name: "الاسم",
     wa_phone: "الهاتف",
     wa_message: "رسالة",
+    stats_cars: "موديلات السيارات",
+    stats_cities: "مدن مغطاة",
+    stats_support: "خدمة متواصلة",
+    stats_years: "سنوات خبرة",
+    testimonials_eyebrow: "آراء عملائنا",
+    testimonials_title: "ثقة عملائنا هي فخرنا",
+    t1_name: "يوسف العلمي",
+    t1_text: "خدمة ممتازة وسيارة نظيفة، التسليم كان فالوقت وفريق متعاون بزاف.",
+    t2_name: "سارة بنعلي",
+    t2_text: "حجزت عبر واتساب فدقائق، وتوصلت بالسيارة للمطار مباشرة. تجربة سلسة.",
+    t3_name: "Karim D.",
+    t3_text: "أسعار معقولة وتأمين شامل خلاني نرتاح طول الرحلة فكل المدن المغربية.",
   },
   fr: {
     dir: "ltr",
@@ -268,6 +280,18 @@ const I18N = {
     wa_name: "Nom",
     wa_phone: "Téléphone",
     wa_message: "Message",
+    stats_cars: "Modèles de voitures",
+    stats_cities: "Villes couvertes",
+    stats_support: "Assistance continue",
+    stats_years: "Années d'expérience",
+    testimonials_eyebrow: "Avis clients",
+    testimonials_title: "La confiance de nos clients, notre fierté",
+    t1_name: "Youssef E.",
+    t1_text: "Excellent service et voiture impeccable, livraison à l'heure et équipe très serviable.",
+    t2_name: "Sarah B.",
+    t2_text: "Réservation en quelques minutes sur WhatsApp, voiture livrée directement à l'aéroport. Très fluide.",
+    t3_name: "Karim D.",
+    t3_text: "Prix justes et assurance complète, j'ai voyagé sereinement dans plusieurs villes du Maroc.",
   },
   en: {
     dir: "ltr",
@@ -364,6 +388,18 @@ const I18N = {
     wa_name: "Name",
     wa_phone: "Phone",
     wa_message: "Message",
+    stats_cars: "Car models",
+    stats_cities: "Cities covered",
+    stats_support: "Ongoing support",
+    stats_years: "Years of experience",
+    testimonials_eyebrow: "Client reviews",
+    testimonials_title: "Our clients' trust is our pride",
+    t1_name: "Youssef E.",
+    t1_text: "Excellent service and a spotless car, on-time delivery and a very helpful team.",
+    t2_name: "Sarah B.",
+    t2_text: "Booked in minutes on WhatsApp, car delivered straight to the airport. Very smooth.",
+    t3_name: "Karim D.",
+    t3_text: "Fair prices and full insurance let me travel worry-free across several Moroccan cities.",
   },
 };
 
@@ -445,8 +481,18 @@ function initLangSwitcher() {
   });
 }
 
-/* ---------------- REVEAL ON SCROLL ---------------- */
+/* ---------------- REVEAL ON SCROLL (staggered) ---------------- */
 function initReveal() {
+  // Assign a stagger index (--d) to each reveal element based on its position
+  // among reveal-siblings within the same parent, so grids/rows animate in sequence.
+  const groups = new Map();
+  document.querySelectorAll(".reveal").forEach((el) => {
+    const parent = el.parentElement;
+    const idx = groups.get(parent) || 0;
+    el.style.setProperty("--d", Math.min(idx, 6));
+    groups.set(parent, idx + 1);
+  });
+
   const items = document.querySelectorAll(".reveal");
   if (!("IntersectionObserver" in window) || items.length === 0) {
     items.forEach((el) => el.classList.add("reveal-visible"));
@@ -462,6 +508,59 @@ function initReveal() {
       });
     },
     { threshold: 0.12 }
+  );
+  items.forEach((el) => obs.observe(el));
+}
+
+/* ---------------- SCROLL PROGRESS BAR ---------------- */
+function initScrollProgress() {
+  let bar = document.getElementById("scrollProgress");
+  if (!bar) {
+    bar = document.createElement("div");
+    bar.id = "scrollProgress";
+    document.body.prepend(bar);
+  }
+  const update = () => {
+    const h = document.documentElement;
+    const scrolled = h.scrollTop;
+    const max = h.scrollHeight - h.clientHeight;
+    bar.style.width = max > 0 ? `${(scrolled / max) * 100}%` : "0%";
+  };
+  window.addEventListener("scroll", update, { passive: true });
+  update();
+}
+
+/* ---------------- ANIMATED COUNTERS ---------------- */
+function initCounters() {
+  const items = document.querySelectorAll("[data-counter]");
+  if (items.length === 0) return;
+  const animate = (el) => {
+    const target = parseInt(el.getAttribute("data-counter"), 10) || 0;
+    const suffix = el.getAttribute("data-counter-suffix") || "";
+    const duration = 1400;
+    const start = performance.now();
+    const step = (now) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(eased * target) + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  if (!("IntersectionObserver" in window)) {
+    items.forEach(animate);
+    return;
+  }
+  const obs = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animate(entry.target);
+          obs.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.4 }
   );
   items.forEach((el) => obs.observe(el));
 }
@@ -506,7 +605,7 @@ function carCardHTML(car) {
           <span class="text-xl font-extrabold">${car.price}</span>
           <span class="text-xs text-[#8a7f6a]"> ${t("per_day")}</span>
         </div>
-        <a href="reservation.html?car=${car.id}"
+        <a href="${rootPath()}reservation.html?car=${car.id}"
           class="text-sm font-semibold bg-[#141414] text-white px-4 py-2 rounded-full hover:bg-[#b8935a] transition-colors">
           ${t("book_now")}
         </a>
@@ -535,6 +634,8 @@ function initSite() {
   initMobileMenu();
   initReveal();
   initNavbarScroll();
+  initScrollProgress();
+  initCounters();
 }
 
 document.addEventListener("DOMContentLoaded", initSite);

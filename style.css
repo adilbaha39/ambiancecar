@@ -27,61 +27,112 @@ body {
   color: var(--ac-text);
 }
 
-/* Reveal-on-scroll */
+/* Reveal-on-scroll (with per-element stagger via --d, set by app.js) */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateY(28px) scale(0.98);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--d, 0) * 90ms);
 }
 .reveal-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
 }
 
+/* Thin gold scroll-progress indicator injected by app.js */
+#scrollProgress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--ac-gold), var(--ac-gold-2));
+  z-index: 70;
+  transition: width 0.1s linear;
+}
+
 /* Navbar */
 #siteNavbar {
-  background-color: rgba(20, 20, 20, 0.92);
-  backdrop-filter: blur(6px);
-  transition: box-shadow 0.3s ease, padding 0.3s ease;
+  background-color: rgba(20, 20, 20, 0.72);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid rgba(212, 175, 55, 0);
+  transition: box-shadow 0.4s ease, background-color 0.4s ease, border-color 0.4s ease;
 }
 #siteNavbar.nav-scrolled {
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  background-color: rgba(15, 15, 15, 0.92);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  border-bottom-color: rgba(212, 175, 55, 0.12);
 }
 
 .nav-link {
   position: relative;
   color: #e8e2d4;
-  transition: color 0.25s ease;
+  transition: color 0.3s ease;
 }
 .nav-link:hover { color: var(--ac-gold-2); }
 .nav-link.active { color: var(--ac-gold-2); }
-.nav-link.active::after {
+.nav-link::after {
   content: "";
   position: absolute;
   left: 0; right: 0; bottom: -8px;
   height: 2px;
   background: var(--ac-gold-2);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
+.nav-link:hover::after,
+.nav-link.active::after { transform: scaleX(1); }
 
 /* Buttons */
 .btn-gold {
+  position: relative;
+  overflow: hidden;
   background: linear-gradient(135deg, var(--ac-gold-2), var(--ac-gold));
   color: #141414;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
 }
+.btn-gold::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.55) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.7s ease;
+}
+.btn-gold:hover::before { transform: translateX(120%); }
 .btn-gold:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(184, 147, 90, 0.35);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px rgba(184, 147, 90, 0.4);
 }
 
-/* Hero decorative arch pattern (evokes Fès architecture) */
+/* Hero: Moroccan zellige-inspired geometric pattern + soft gold glow */
 .hero-pattern {
+  position: relative;
   background-image:
-    radial-gradient(circle at 12% 20%, rgba(212,175,55,0.15) 0, transparent 40%),
-    radial-gradient(circle at 88% 80%, rgba(212,175,55,0.12) 0, transparent 45%);
+    radial-gradient(circle at 12% 20%, rgba(212,175,55,0.16) 0, transparent 42%),
+    radial-gradient(circle at 88% 80%, rgba(212,175,55,0.13) 0, transparent 48%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%23d4af37' stroke-opacity='0.07' stroke-width='1'%3E%3Cpath d='M36 0 L54 18 L36 36 L18 18 Z'/%3E%3Cpath d='M36 36 L54 54 L36 72 L18 54 Z'/%3E%3Cpath d='M0 18 L18 0 L36 18 L18 36 Z'/%3E%3Cpath d='M36 18 L54 0 L72 18 L54 36 Z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.glow-ring {
+  position: relative;
+}
+.glow-ring::after {
+  content: "";
+  position: absolute;
+  inset: -30px;
+  background: radial-gradient(circle, rgba(212,175,55,0.28) 0%, transparent 65%);
+  z-index: -1;
+  animation: glow-pulse 4s ease-in-out infinite;
+}
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.06); }
 }
 
 .arch-frame {
@@ -106,10 +157,34 @@ body {
 
 /* Car card hover lift */
 .car-card {
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease, border-color 0.5s ease;
 }
 .car-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(212, 175, 55, 0.45);
+}
+
+/* Animated counters */
+.counter-value {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, var(--ac-gold-2), var(--ac-gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Testimonial cards */
+.testimonial-card {
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease;
+}
+.testimonial-card:hover {
   transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(20, 20, 20, 0.12);
+}
+.quote-mark {
+  font-family: Georgia, serif;
+  color: rgba(212, 175, 55, 0.35);
+  line-height: 1;
 }
 
 /* Floating WhatsApp button */
