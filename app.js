@@ -27,7 +27,15 @@ const AGENCY = {
   ],
 };
 
-/* ---------------- FLEET DATA (extracted from the design) ---------------- */
+/* ---------------- FLEET DATA ----------------
+   Photos below are real, freely-licensed photos (Unsplash License —
+   free for commercial use, no attribution required) matched to the
+   closest real model available. Verified sources:
+   - Golf:    unsplash.com/photos/white-volkswagen-hatchback-kS-yywlJlLU
+   - Duster:  unsplash.com/photos/black-dacia-duster-running-on-road-during-daytime-1EFn8clp5Do
+   - Yaris:   unsplash.com/photos/a-white-toyota-cars-front-close-up-9cHDSx71lJQ
+   - Fiat 500: unsplash.com/photos/red-fiat-500-outside-building-FVhObSEW_z0
+------------------------------------------------- */
 const CARS = [
   {
     id: "golf",
@@ -38,29 +46,7 @@ const CARS = [
     transmission: { ar: "أوتوماتيك", fr: "Automatique", en: "Automatic" },
     fuel: { ar: "بنزين", fr: "Essence", en: "Petrol" },
     extra: { ar: "تكييف", fr: "Climatisation", en: "A/C" },
-    image: "https://placehold.co/800x600/1a1a1a/d4af37?font=montserrat&text=Volkswagen+Golf",
-  },
-  {
-    id: "208",
-    name: "Peugeot 208",
-    year: 2024,
-    price: 350,
-    seats: 5,
-    transmission: { ar: "أوتوماتيك", fr: "Automatique", en: "Automatic" },
-    fuel: { ar: "بنزين", fr: "Essence", en: "Petrol" },
-    extra: { ar: "تكييف", fr: "Climatisation", en: "A/C" },
-    image: "https://placehold.co/800x600/1a1a1a/d4af37?font=montserrat&text=Peugeot+208",
-  },
-  {
-    id: "clio",
-    name: "Renault Clio",
-    year: 2023,
-    price: 400,
-    seats: 5,
-    transmission: { ar: "أوتوماتيك", fr: "Automatique", en: "Automatic" },
-    fuel: { ar: "بنزين", fr: "Essence", en: "Petrol" },
-    extra: { ar: "تكييف", fr: "Climatisation", en: "A/C" },
-    image: "https://placehold.co/800x600/1a1a1a/d4af37?font=montserrat&text=Renault+Clio",
+    image: "https://images.unsplash.com/photo-1572634303017-48a1618ab4fd?w=800&h=600&q=75&auto=format&fit=crop",
   },
   {
     id: "duster",
@@ -71,7 +57,29 @@ const CARS = [
     transmission: { ar: "أوتوماتيك", fr: "Automatique", en: "Automatic" },
     fuel: { ar: "بنزين", fr: "Essence", en: "Petrol" },
     extra: { ar: "تكييف", fr: "Climatisation", en: "A/C" },
-    image: "https://placehold.co/800x600/1a1a1a/d4af37?font=montserrat&text=Dacia+Duster",
+    image: "https://images.unsplash.com/photo-1545128309-b29449c33d49?w=800&h=600&q=75&auto=format&fit=crop",
+  },
+  {
+    id: "yaris",
+    name: "Toyota Yaris",
+    year: 2023,
+    price: 350,
+    seats: 5,
+    transmission: { ar: "أوتوماتيك", fr: "Automatique", en: "Automatic" },
+    fuel: { ar: "بنزين", fr: "Essence", en: "Petrol" },
+    extra: { ar: "تكييف", fr: "Climatisation", en: "A/C" },
+    image: "https://images.unsplash.com/photo-1749058982846-c30cf5cad13a?w=800&h=600&q=75&auto=format&fit=crop",
+  },
+  {
+    id: "fiat500",
+    name: "Fiat 500",
+    year: 2023,
+    price: 380,
+    seats: 4,
+    transmission: { ar: "أوتوماتيك", fr: "Automatique", en: "Automatic" },
+    fuel: { ar: "بنزين", fr: "Essence", en: "Petrol" },
+    extra: { ar: "تكييف", fr: "Climatisation", en: "A/C" },
+    image: "https://images.unsplash.com/photo-1577057802138-c8b0286f2871?w=800&h=600&q=75&auto=format&fit=crop",
   },
 ];
 
